@@ -9,8 +9,10 @@ import com.ia.chatbotia.dto.GastoDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ia.chatbotia.Entity.Gasto;
+import com.ia.chatbotia.projection.gastoProjection;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -41,6 +43,10 @@ public class GastoSvcImpl {
         gasto.setTipoGasto(datos.getTipoGasto() + "");
         gasto.setMontoGasto(datos.getMontoGasto());
         return gastoRepository.save(gasto);
+    }
+    
+    public List<gastoProjection> showGastos(String nit){
+        return gastoRepository.mostrarGastos(nit);
     }
 
 }

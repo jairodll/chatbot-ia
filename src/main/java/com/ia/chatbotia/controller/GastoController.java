@@ -9,10 +9,16 @@ import com.ia.chatbotia.Service.Impl.GastoSvcImpl;
 import com.ia.chatbotia.components.Exceptiones;
 import com.ia.chatbotia.dto.GastoDto;
 import com.ia.chatbotia.dto.ResponseDto;
+import com.ia.chatbotia.projection.gastoProjection;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -39,4 +45,12 @@ public class GastoController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
         }
     }
+
+    @GetMapping(path = "/showGastosByNit/{nit}")
+    @ApiOperation("Muestra los gastos a partir del Nit")
+    public ResponseEntity<List<gastoProjection>> searchGestion(
+            @PathVariable @ApiParam(value = "nit") String nit) {
+        return ResponseEntity.ok(gastoSvc.showGastos(nit));
+    }
+
 }
