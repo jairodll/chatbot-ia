@@ -11,6 +11,7 @@ package com.ia.chatbotia.projection;
  */
 public interface gastoProjection {
     
+    String getIdGasto();
     String getNombreUsuario();
     String getTipoGasto();
     String getMontoGasto();

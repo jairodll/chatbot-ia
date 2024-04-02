@@ -7,8 +7,10 @@ package com.ia.chatbotia.Service.Impl;
 import com.ia.chatbotia.Entity.IngresoMensual;
 import com.ia.chatbotia.Repository.IngresoMensualRepository;
 import com.ia.chatbotia.dto.IngresoDto;
+import com.ia.chatbotia.projection.ingresoProjection;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -40,5 +42,9 @@ public class IngresoMensualSvcImpl {
         ingreso.setMesIngreso(datos.getMesIngreso());
         ingreso.setMontoIngreso(datos.getMontoIngreso());
         return ingresoRepository.save(ingreso);
+    }
+    
+    public List<ingresoProjection> showIngreso(String nit){
+        return ingresoRepository.mostrarIngreso(nit);
     }
 }

@@ -18,6 +18,7 @@ import org.springframework.data.repository.query.Param;
 public interface GastoRepository extends CrudRepository<Gasto, Object> {
 
     @Query(value = "select u.nombre_usuario as nombreUsuario, \n"
+            + "	   g.gasto_id as idGasto,\n"
             + "	   g.tipo_gasto as tipoGasto, \n"
             + "	   g.monto_gasto as montoGasto, \n"
             + "	   g.fecha_gasto as fechaGasto\n"
