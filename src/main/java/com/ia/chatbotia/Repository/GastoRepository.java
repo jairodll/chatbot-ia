@@ -10,12 +10,14 @@ import java.util.List;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 
 /**
  *
  * @author Oscar
  */
-public interface GastoRepository extends CrudRepository<Gasto, Object> {
+@Repository
+public interface GastoRepository extends CrudRepository<Gasto, Long> {
 
     @Query(value = "select u.nombre_usuario as nombreUsuario, \n"
             + "	   g.gasto_id as idGasto,\n"
