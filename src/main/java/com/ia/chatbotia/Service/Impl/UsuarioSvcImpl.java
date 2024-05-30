@@ -9,6 +9,7 @@ import com.ia.chatbotia.Repository.UsuarioRepository;
 import com.ia.chatbotia.dto.LoginRequest;
 import com.nimbusds.jose.JOSEException;
 import com.ia.chatbotia.components.Exceptiones;
+import com.ia.chatbotia.projection.InformacionDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.Collections;
@@ -25,6 +26,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import com.ia.chatbotia.security.JwtTokenProvider;
 import com.ia.chatbotia.security.LoginResponse;
+import com.nimbusds.jose.shaded.json.JSONObject;
+import java.util.List;
 
 /**
  * Servicio para operaciones relacionadas con usuarios.
@@ -95,7 +98,7 @@ public class UsuarioSvcImpl implements UserDetailsService {
         System.out.println("pasa por aca");
         String jwt = generateJwtToken(loginRequest.getUsername());
 
-        LoginResponse loginResponse = new LoginResponse(jwt,user.getNit());
+        LoginResponse loginResponse = new LoginResponse(jwt, user.getNit());
         return ResponseEntity.ok(loginResponse);
     }
 
@@ -115,5 +118,20 @@ public class UsuarioSvcImpl implements UserDetailsService {
                 user.getContraseña(),
                 Collections.emptyList()
         );
+    }
+
+    public ResponseEntity<?> obtenerInformacionCompleta(String nitUsuario) {
+        List<InformacionDTO> ingresos = repository.obtenerIngresos(nitUsuario);
+        List<InformacionDTO> limitesGastos = repository.obtenerLimitesGastos(nitUsuario);
+        List<InformacionDTO> gastos = repository.obtenerGastos(nitUsuario);
+        List<InformacionDTO> ahorros = repository.obtenerAhorros(nitUsuario);
+
+        JSONObject dataForm = new JSONObject();
+        dataForm.put("ingresos", ingresos);
+        dataForm.put("limitesGastos", limitesGastos);
+        dataForm.put("gastos", gastos);
+        dataForm.put("ahorros", ahorros);
+
+        return ResponseEntity.ok(dataForm);
     }
 }

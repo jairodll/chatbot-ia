@@ -11,6 +11,8 @@ import com.ia.chatbotia.dto.LoginRequest;
 import com.ia.chatbotia.dto.ResponseDto;
 import com.nimbusds.jose.JOSEException;
 import com.ia.chatbotia.components.Exceptiones;
+import com.ia.chatbotia.projection.InformacionDTO;
+import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -65,5 +67,9 @@ public class UsuarioController {
         return ResponseEntity.ok(servicio.findUsuarioByUsername(username)).getBody();
     }
 
+   @GetMapping("/obtenerTodaInformacion/{nitUsuario}")
+    public ResponseEntity<?> obtenerInformacionCompleta(@PathVariable(required = true) String nitUsuario) {
+        return servicio.obtenerInformacionCompleta(nitUsuario);
+    }
   
 }
